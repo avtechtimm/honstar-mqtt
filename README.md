@@ -1,5 +1,6 @@
 > [!WARNING]
-> **This project is no longer maintained.** Because I no longer own an Acura ZDX and I have no way to test this code going forward, not further updates, bug fixes, or security patches will be provided.
+> **This project is no longer maintained.**\
+> As I no longer own an Acura ZDX and have no way to test this code, no further updates, bug fixes, or security patches will be provided.
 
 # HOnStar MQTT Gateway
 
