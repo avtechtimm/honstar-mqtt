@@ -674,13 +674,24 @@ Docker:
       } catch (err) {
         log(`Climate command failed: ${err.message}`);
 
-        // Revert to previous state
-        climateMode = previousMode;
-        brokerClient.publish(
-          climateStateTopic,
-          previousMode === "auto" ? "ON" : "OFF",
-          mqttOpts
-        );
+        // The 60-minute auto-off timer can fire while a stop request is
+        // awaiting Honda's response. In that case, the timer has already
+        // changed climateMode to "off" and published OFF. Never overwrite
+        // that newer state with the ON value captured before the request.
+        if (climateMode === previousMode) {
+          brokerClient.publish(
+            climateStateTopic,
+            previousMode === "auto" ? "ON" : "OFF",
+            mqttOpts
+          );
+        } else {
+          log("Keeping newer climate state after failed command (auto-off occurred)");
+          brokerClient.publish(
+            climateStateTopic,
+            climateMode === "auto" ? "ON" : "OFF",
+            mqttOpts
+          );
+        }
 
         await handleReauth(err.message);
       } finally {
