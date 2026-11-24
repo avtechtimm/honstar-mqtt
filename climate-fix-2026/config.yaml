@@ -1,0 +1,34 @@
+name: HOnStar MQTT (2026 Climate Fix)
+version: "2.0.1-test1"
+slug: honstar-mqtt-2026
+description: >-
+  MQTT Bridge for Honda/Acura EVs based on the GM BEV3 platform.
+  Polls vehicle status (battery, range, tires, charging, odometer)
+  and publishes to MQTT topics.
+url: https://github.com/avtechtimm/honstar-mqtt
+arch:
+  - amd64
+  - aarch64
+  - armv7
+  - armhf
+startup: application
+boot: auto
+services:
+  - mqtt:need
+options:
+  hws_email: ""
+  hws_password: ""
+  hws_pin: ""
+  vin: ""
+  mqtt_url: "mqtt://auto_username:auto_password@auto_hostname"
+  poll_interval: 900
+  debug: false
+schema:
+  hws_email: email
+  hws_password: password
+  hws_pin: str?
+  vin: str?
+  mqtt_url: str?
+  poll_interval: int?
+  debug: bool?
+init: false
